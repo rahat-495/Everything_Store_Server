@@ -20,6 +20,10 @@ const userSchema = new Schema<TUser>({
         type : nameSchema ,
         required: true,
     },
+    image : {
+        type : String ,
+        default : "" ,
+    },
     email : {
         type : String ,
         required: true,

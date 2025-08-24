@@ -7,6 +7,7 @@ export interface TName {
 export interface TUser {
     name: TName;
     email: string;
+    image : string ;
     phone : number ;
     address ?: string ;
     password : string ;
