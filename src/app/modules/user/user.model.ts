@@ -26,7 +26,7 @@ const userSchema = new Schema<TUser>({
     },
     email : {
         type : String ,
-        required: true,
+        default: "",
         unique : true,
     },
     phone : {
@@ -36,7 +36,7 @@ const userSchema = new Schema<TUser>({
     },
     address : {
         type : String ,
-        required: true,
+        default: "",
     },
     isActive : {
         type : Boolean ,
