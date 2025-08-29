@@ -9,8 +9,20 @@ import jwt from "jsonwebtoken" ;
 import config from "../../config";
 
 const createUserIntoDb = async (payload : TUser) => {
+    const isUserAlreadyExist = await userModel.findOne({ $or : [ {email : payload.email} , { phone : payload.phone } ] }) ;
+    if(isUserAlreadyExist){
+        throw new AppError(http.CONFLICT , "User already exist !") ;
+    }
+    
     const result = await userModel.create(payload) ;
-    return result ;
+    
+    if(!result){
+        throw new AppError(http.BAD_REQUEST , "Something went wrong during register user !") ;
+    }
+    
+    const accessToken = jwt.sign({...result , password : ""} , config.jwtAccessSecret as string , {expiresIn : '10d'}) ;
+    const refreshToken = jwt.sign({...result , password : ""} , config.jwtAccessSecret as string , {expiresIn : '365d'}) ;
+    return {result , accessToken , refreshToken} ;
 }
 
 const login = async (payload : TLoginUser) => {
@@ -32,8 +44,7 @@ const login = async (payload : TLoginUser) => {
     }
     
     const accessToken = jwt.sign({...isUserExist , password : ""} , config.jwtAccessSecret as string , {expiresIn : '10d'}) ;
-    const refreshToken = jwt.sign({...isUserExist , password : ""} , config.jwtAccessSecret as string , {expiresIn : '10d'}) ;
-
+    const refreshToken = jwt.sign({...isUserExist , password : ""} , config.jwtAccessSecret as string , {expiresIn : '365d'}) ;
     return {accessToken , refreshToken} ;
 }
 

@@ -10,4 +10,5 @@ export default {
     bcryptSaltRounds : process.env.BCRYPT_SALT_ROUNDS,
     jwtAccessSecret : process.env.JWT_ACCESS_SECRET,
     jwtRefreshSecret : process.env.JWT_REFRESH_SECRET,
+    nodeEnv : process.env.NODE_ENV,
 }
