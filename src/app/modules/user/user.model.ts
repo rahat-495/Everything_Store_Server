@@ -72,9 +72,4 @@ userSchema.post("find" , function(doc , next) {
     next() ;
 })
 
-userSchema.post("findOne" , function(doc , next) {
-    doc.password = "" ;
-    next() ;
-})
-
 export const userModel = model<TUser>("user" , userSchema) ;
