@@ -9,7 +9,7 @@ import jwt from "jsonwebtoken" ;
 import config from "../../config";
 
 const createUserIntoDb = async (payload : TUser) => {
-    const isUserAlreadyExist = await userModel.findOne({ $or : [ {email : payload.email} , { phone : payload.phone } ] }) ;
+    const isUserAlreadyExist = await userModel.findOne({ $or : [ {email : payload?.email} , { phone : payload?.phone } ] }) ;
     if(isUserAlreadyExist){
         throw new AppError(http.CONFLICT , "User already exist !") ;
     }
