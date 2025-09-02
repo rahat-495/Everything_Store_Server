@@ -43,9 +43,19 @@ const login = async (payload : TLoginUser) => {
         throw new AppError(http.UNAUTHORIZED , "Invalid cradentials !") ;
     }
     
+    const user = {
+        _id : isUserExist._id ,
+        name : isUserExist.name ,
+        email : isUserExist.email ,
+        phone : isUserExist.phone ,
+        address : isUserExist.address ,
+        image : isUserExist.image ,
+        role : isUserExist.role ,
+    }
+
     const accessToken = jwt.sign({...isUserExist , password : ""} , config.jwtAccessSecret as string , {expiresIn : '10d'}) ;
     const refreshToken = jwt.sign({...isUserExist , password : ""} , config.jwtAccessSecret as string , {expiresIn : '365d'}) ;
-    return {accessToken , refreshToken} ;
+    return {user , accessToken , refreshToken} ;
 }
 
 export const authServices = {

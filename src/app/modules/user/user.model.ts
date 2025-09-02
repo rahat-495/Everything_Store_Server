@@ -30,7 +30,7 @@ const userSchema = new Schema<TUser>({
         unique : true,
     },
     phone : {
-        type : Number ,
+        type : String ,
         required: true,
         unique : true,
     },

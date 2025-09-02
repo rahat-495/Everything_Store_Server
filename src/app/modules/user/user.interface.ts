@@ -8,7 +8,7 @@ export interface TUser {
     name : TName;
     email ?: string;
     image ?: string ;
-    phone : number ;
+    phone : string ;
     address ?: string ;
     password : string ;
     role : "user" | "admin" ;

@@ -17,7 +17,7 @@ const loginUser = catchAsync(async (req : Request , res : Response , next : Next
     const result = await authServices.login(req.body) ;
     res.cookie("token" , result.refreshToken , {httpOnly : true , secure : config.nodeEnv === 'production' , sameSite : "none" , maxAge : 1000 * 60 * 60 * 24 * 365}) ;
     if(result){
-        sendResponse<object>(res , {data : { accessToken : result.accessToken} , statusCode : 201 , success : true , message : "User register successfully !"}) ;
+        sendResponse<object>(res , {data : { user : result.user , accessToken : result.accessToken } , statusCode : 201 , success : true , message : "User login successfully !"}) ;
     }
 })
 
