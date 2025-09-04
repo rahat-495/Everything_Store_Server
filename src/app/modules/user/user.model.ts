@@ -27,7 +27,6 @@ const userSchema = new Schema<TUser>({
     email : {
         type : String ,
         default: "",
-        unique : true,
     },
     phone : {
         type : String ,
