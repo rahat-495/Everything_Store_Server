@@ -9,6 +9,10 @@ import jwt from "jsonwebtoken" ;
 import config from "../../config";
 
 const createUserIntoDb = async (payload : TUser) => {
+    if(payload?.password.length < 6){
+        throw new AppError(http.BAD_REQUEST , "Password must be greater then 6 charecters !") ;
+    }
+
     const isUserAlreadyExist = await userModel.findOne({ $or : [ {email : payload?.email} , { phone : payload?.phone } ] }) ;
     if(isUserAlreadyExist){
         throw new AppError(http.CONFLICT , "User already exist !") ;
@@ -27,6 +31,9 @@ const createUserIntoDb = async (payload : TUser) => {
 
 const login = async (payload : TLoginUser) => {
     const { email, phone, password } = payload;
+    if(payload?.password.length < 6){
+        throw new AppError(http.BAD_REQUEST , "Password must be greater then 6 charecters !") ;
+    }
 
     const isUserExist = await userModel.findOne({ $or : [ {email} , {phone} ] }).select("+password") ;
 
@@ -40,7 +47,7 @@ const login = async (payload : TLoginUser) => {
     
     const isPasswordMatched = await bcrypt.compare(password , isUserExist.password) ;
     if(!isPasswordMatched){
-        throw new AppError(http.UNAUTHORIZED , "Invalid cradentials !") ;
+        throw new AppError(http.UNAUTHORIZED , "Password isn't match !") ;
     }
     
     const user = {
