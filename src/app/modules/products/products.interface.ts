@@ -8,4 +8,5 @@ export interface TProduct {
   discount?: number; 
   inStock : boolean;
   quantity : number;
+  category : string;
 }

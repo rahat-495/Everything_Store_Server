@@ -7,7 +7,7 @@ import sendResponse from "../../utils/sendResponse";
 const getAllProducts = catchAsync(async (req : Request , res : Response , next : NextFunction) => {
     const result = await productServices.getAllProductsFromDb(req.query) ;
     if(result){
-        sendResponse(res , {data : result , success : true , statusCode : 200 , message : "Products retribed successfully !"}) ;
+        sendResponse(res , {data : result?.result , meta : result.meta , success : true , statusCode : 200 , message : "Products retribed successfully !"}) ;
     }
 })
 

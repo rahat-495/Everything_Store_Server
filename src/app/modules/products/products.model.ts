@@ -29,6 +29,10 @@ const productSchema = new Schema<TProduct>({
         type : Boolean ,
         default : true ,
     },
+    category : {
+        type : String ,
+        require : true ,
+    },
     quantity : {
         type : Number ,
         required : true ,
