@@ -6,4 +6,6 @@ export interface TProduct {
   price: number;
   previousPrice?: number; 
   discount?: number; 
+  inStock : boolean;
+  quantity : number;
 }

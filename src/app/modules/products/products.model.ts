@@ -25,6 +25,14 @@ const productSchema = new Schema<TProduct>({
         type : String ,
         required : true ,
     },
+    inStock : {
+        type : Boolean ,
+        default : true ,
+    },
+    quantity : {
+        type : Number ,
+        required : true ,
+    },
 })
 
 export const productsModel = model<TProduct>("product" , productSchema) ;
