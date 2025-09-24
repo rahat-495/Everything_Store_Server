@@ -31,6 +31,37 @@ const createProductValidationSchema = z.object({
     })
 });
 
+const updateProductValidationSchema = z.object({
+    body : z.object({
+        description: z.string({
+            required_error: "Description is required",
+        }).optional(),
+
+        image: z.string({
+            required_error: "Image URL is required",
+        }).optional(),
+
+        discount: z.number().optional(),
+
+        previousPrice: z.number().optional(),
+
+        price: z.number({
+            required_error: "Price is required",
+        }).optional(),
+
+        title: z.string({
+            required_error: "Title is required",
+        }).optional(),
+
+        inStock: z.boolean().default(true).optional(),
+
+        quantity: z.number({
+            required_error: "Quantity is required",
+        }).optional(),
+    })
+});
+
 export const productValidations = {
-  createProductValidationSchema,
+  createProductValidationSchema ,
+  updateProductValidationSchema ,
 };

@@ -11,6 +11,13 @@ const getAllProducts = catchAsync(async (req : Request , res : Response , next :
     }
 })
 
+const getSingleProduct = catchAsync(async (req : Request , res : Response , next : NextFunction) => {
+    const result = await productServices.getSingleProductFromDb(req.params.id) ;
+    if(result){
+        sendResponse(res , {data : result , success : true , statusCode : 200 , message : "Product retribed successfully !"}) ;
+    }
+})
+
 const createProduct = catchAsync(async (req : Request , res : Response , next : NextFunction) => {
     const result = await productServices.createProductIntoDb(req.body) ;
     if(result){
@@ -18,7 +25,24 @@ const createProduct = catchAsync(async (req : Request , res : Response , next : 
     }
 })
 
+const updateProduct = catchAsync(async (req : Request , res : Response , next : NextFunction) => {
+    const result = await productServices.updateProductIntoDb(req.params.id , req.body) ;
+    if(result){
+        sendResponse(res , {data : result , success : true , statusCode : 200 , message : "Product updated successfully !"}) ;
+    }
+})
+
+const deleteProduct = catchAsync(async (req : Request , res : Response , next : NextFunction) => {
+    const result = await productServices.deleteProductFromDb(req.params.id) ;
+    if(result){
+        sendResponse(res , {data : result , success : true , statusCode : 200 , message : "Product deleted successfully !"}) ;
+    }
+})
+
 export const productControllers = {
     createProduct ,
+    updateProduct ,
+    deleteProduct ,
     getAllProducts ,
+    getSingleProduct ,
 }
