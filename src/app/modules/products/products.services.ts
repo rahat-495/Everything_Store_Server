@@ -9,6 +9,12 @@ const getAllProductsFromDb = async (query : any) => {
     const limit = Number(query?.limit) || 12 ;
     const skip = ( page - 1 ) * limit ;
 
+    if(query?.minPrice === '0' && query?.maxPrice === '0'){
+        query.minPrice = null ;
+        query.maxPrice = null ;
+        console.log(query);
+    }
+
     const filter : any = {} ;
 
     if(query?.searchTerm){
