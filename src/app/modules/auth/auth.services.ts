@@ -35,7 +35,7 @@ const login = async (payload : TLoginUser) => {
         throw new AppError(http.BAD_REQUEST , "Password must be greater then 6 charecters !") ;
     }
 
-    const isUserExist = await userModel.findOne({ $or : [ {email} , {phone} ] }).select("+password") ;
+    const isUserExist = await userModel.findOne({ $or : [ {email : phone} , {phone} ] }).select("+password") ;
 
     if(!isUserExist){
         throw new AppError(http.NOT_FOUND , "User not found !") ;
