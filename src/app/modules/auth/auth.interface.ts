@@ -4,3 +4,8 @@ export interface TLoginUser {
   phone ?: string;
   password : string;
 }
+
+export interface TUpdatePassword {
+  oldPassword : string ;
+  newPassword : string ;
+}

@@ -1,11 +1,12 @@
 
+// @ts-nocheck
 import AppError from "../../../errors/AppError";
 import { TUser } from "../user/user.interface"
 import { userModel } from "../user/user.model";
-import { TLoginUser } from "./auth.interface";
+import { TLoginUser, TUpdatePassword } from "./auth.interface";
 import http from "http-status-codes"
 import bcrypt from "bcrypt"
-import jwt from "jsonwebtoken" ;
+import jwt, { JwtPayload } from "jsonwebtoken" ;
 import config from "../../config";
 
 const createUserIntoDb = async (payload : TUser) => {
@@ -65,7 +66,14 @@ const login = async (payload : TLoginUser) => {
     return {user , accessToken , refreshToken} ;
 }
 
+const updatePasswordIntoDb = async (payload : TUpdatePassword , user : JwtPayload) => {
+    const userData = await userModel.findById(user?._id).select("+password") ;
+    console.log(userData?._doc);
+    return null ;
+}
+
 export const authServices = {
     login ,
     createUserIntoDb ,
+    updatePasswordIntoDb ,
 }

@@ -29,7 +29,10 @@ const logoutUser = catchAsync(async (req : Request , res : Response , next : Nex
 })
 
 const updatePassword = catchAsync(async(req : Request , res : Response , next : NextFunction) => {
-
+    const result = await authServices.updatePasswordIntoDb(req.body , req.user) ;
+    if(result){
+        sendResponse<object>(res , {data : result , statusCode : 201 , success : true , message : "User password updated successfully !"}) ;
+    }
 })
 
 export const authControllers = {
