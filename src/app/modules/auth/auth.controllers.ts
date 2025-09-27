@@ -28,8 +28,13 @@ const logoutUser = catchAsync(async (req : Request , res : Response , next : Nex
     sendResponse<object>(res , {data : {} , statusCode : 201 , success : true , message : "User logout successfully !"}) ;
 })
 
+const updatePassword = catchAsync(async(req : Request , res : Response , next : NextFunction) => {
+
+})
+
 export const authControllers = {
     loginUser ,
     logoutUser ,
     registerUser ,
+    updatePassword ,
 }
