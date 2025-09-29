@@ -6,6 +6,6 @@ export interface TLoginUser {
 }
 
 export interface TUpdatePassword {
-  oldPassword : string ;
+  currentPassword : string ;
   newPassword : string ;
 }

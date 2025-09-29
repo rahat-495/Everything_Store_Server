@@ -10,16 +10,13 @@ import { TUserRole } from '../modules/user/user.interface';
 
 const auth = (...requiredRole: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const token = req.headers.authorization;
-
-    if (!token) {
+    const token = req.cookies?.accessToken;
+    
+    if (!req.cookies?.accessToken) {
       throw new AppError(StatusCodes.UNAUTHORIZED, 'You are not Authorized!');
     }
 
-    const decoded = jwt.verify(
-      token,
-      config.jwtAccessSecret as string
-    ) as JwtPayload;
+    const decoded = jwt.verify( token, config.jwtAccessSecret as string ) as JwtPayload;
 
     const user = await userModel.findOne({ $or : [ { email : decoded?._doc?.email } , { phone : decoded?._doc?.phone } ] });
 

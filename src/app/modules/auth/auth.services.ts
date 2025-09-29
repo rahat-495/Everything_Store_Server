@@ -68,12 +68,12 @@ const login = async (payload : TLoginUser) => {
 
 const updatePasswordIntoDb = async (payload : TUpdatePassword , user : JwtPayload) => {
     const userData = await userModel.findById(user?._doc?._id).select("+password") ;
-    const isPasswordMatched = await bcrypt.compare(payload?.oldPassword , userData?.password) ;
+    const isPasswordMatched = await bcrypt.compare(payload?.currentPassword , userData?.password) ;
     if(!isPasswordMatched){
         throw new AppError(http.UNAUTHORIZED , "Old password isn't match !") ;
     }
     
-    const newHashedPassword = await bcrypt.hash(payload?.newPassword , Number(config.bcryptSaltRounds))
+    const newHashedPassword = await bcrypt.hash(payload?.newPassword , Number(config.bcryptSaltRounds)) ;
     const result = await userModel.findByIdAndUpdate(userData?._id , { password : newHashedPassword } , {new : true}).select("-password") ;
     return result ;
 }
