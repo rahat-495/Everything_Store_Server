@@ -6,5 +6,6 @@ import auth from "../../middlewares/auth";
 const router = Router() ;
 
 router.get("/getMyData" , auth("admin" , "user") , userControllers.getMyData) ;
+router.post("/updateProfile" , auth("admin" , "user") , userControllers.updateProfile)
 
 export const userRoutes = router ;
