@@ -4,7 +4,11 @@ import z from "zod";
 const createProductValidationSchema = z.object({
     body : z.object({
         description: z.string({
-        required_error: "Description is required",
+            required_error: "Description is required",
+        }),
+        
+        shortDescription: z.string({
+            required_error: "Short description is required",
         }),
 
         image: z.string({
@@ -34,6 +38,10 @@ const createProductValidationSchema = z.object({
 const updateProductValidationSchema = z.object({
     body : z.object({
         description: z.string({
+            required_error: "Description is required",
+        }).optional(),
+
+        shortDescription: z.string({
             required_error: "Description is required",
         }).optional(),
 
