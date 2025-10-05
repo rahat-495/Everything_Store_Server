@@ -12,7 +12,6 @@ const getAllProductsFromDb = async (query : any) => {
     if(query?.minPrice === '0' && query?.maxPrice === '0'){
         query.minPrice = null ;
         query.maxPrice = null ;
-        console.log(query);
     }
 
     const filter : any = {} ;
