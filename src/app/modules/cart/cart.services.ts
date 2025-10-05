@@ -29,7 +29,7 @@ const updateCartIntoDb = async (id : string , payload : Partial<TCart>) => {
     if(!isCartExist){
         throw new AppError(http.NOT_FOUND , "Cart not found !") ;
     }
-
+    
     if(Number(product?.quantity) >= Number(payload?.amount)){
         const result = await cartsModel.findByIdAndUpdate(id , payload , {new : true}) ;
         return result ;
@@ -39,8 +39,20 @@ const updateCartIntoDb = async (id : string , payload : Partial<TCart>) => {
     }
 }
 
+const deleteCartIntoDb = async (id : string) => {
+    const isCartExist = await cartsModel.findById(id) ;
+    
+    if(!isCartExist){
+        throw new AppError(http.NOT_FOUND , "Cart not found !") ;
+    }
+    
+    const result = await cartsModel.findByIdAndDelete(id) ;
+    return result ;
+}
+
 export const cartServices = {
     getMyAllCartsFromDb ,
     createCartIntoDb ,
     updateCartIntoDb ,
+    deleteCartIntoDb ,
 }

@@ -7,7 +7,7 @@ import sendResponse from "../../utils/sendResponse";
 const getMyAllCarts = catchAsync(async (req : Request , res : Response , next : NextFunction) => {
     const result = await cartServices.getMyAllCartsFromDb(req.user) ;
     if(result){
-        sendResponse<object>(res , {data : result , statusCode : 201 , success : true , message : "Add to cart successfull !"}) ;
+        sendResponse<object>(res , {data : result , statusCode : 201 , success : true , message : "Successfully retrived all carts !"}) ;
     }
 })
 
@@ -25,8 +25,16 @@ const updateAddToCart = catchAsync(async (req : Request , res : Response , next 
     }
 })
 
+const deleteAddToCart = catchAsync(async (req : Request , res : Response , next : NextFunction) => {
+    const result = await cartServices.deleteCartIntoDb(req?.params?.id) ;
+    if(result){
+        sendResponse<object>(res , {data : result , statusCode : 201 , success : true , message : "Successfully deleted add to cart !"}) ;
+    }
+})
+
 export const cartControllers = {
     addToCart ,
     getMyAllCarts ,
     updateAddToCart ,
+    deleteAddToCart ,
 }
