@@ -1,9 +1,15 @@
 
+import { JwtPayload } from "jsonwebtoken";
 import AppError from "../../../errors/AppError";
 import { productsModel } from "../products/products.model";
 import { TCart } from "./cart.interfaces"
 import { cartsModel } from "./cart.model";
 import http from "http-status-codes";
+
+const getMyAllCartsFromDb = async (user : JwtPayload) => {
+    const result = await cartsModel.find({userId : user?._doc?._id}) ;
+    return result ;
+}
 
 const createCartIntoDb = async (payload : TCart) => {
     const product = await productsModel.findById(payload?.productId) ;
@@ -34,6 +40,7 @@ const updateCartIntoDb = async (id : string , payload : Partial<TCart>) => {
 }
 
 export const cartServices = {
+    getMyAllCartsFromDb ,
     createCartIntoDb ,
     updateCartIntoDb ,
 }

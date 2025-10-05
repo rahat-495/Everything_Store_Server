@@ -4,6 +4,13 @@ import catchAsync from "../../utils/catchAsync"
 import { cartServices } from "./cart.services"
 import sendResponse from "../../utils/sendResponse";
 
+const getMyAllCarts = catchAsync(async (req : Request , res : Response , next : NextFunction) => {
+    const result = await cartServices.getMyAllCartsFromDb(req.user) ;
+    if(result){
+        sendResponse<object>(res , {data : result , statusCode : 201 , success : true , message : "Add to cart successfull !"}) ;
+    }
+})
+
 const addToCart = catchAsync(async (req : Request , res : Response , next : NextFunction) => {
     const result = await cartServices.createCartIntoDb(req.body) ;
     if(result){
@@ -20,5 +27,6 @@ const updateAddToCart = catchAsync(async (req : Request , res : Response , next 
 
 export const cartControllers = {
     addToCart ,
+    getMyAllCarts ,
     updateAddToCart ,
 }
