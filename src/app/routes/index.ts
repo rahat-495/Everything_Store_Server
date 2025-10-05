@@ -3,7 +3,7 @@ import { Router } from "express";
 import { productRoutes } from "../modules/products/products.routes";
 import { authRoutes } from "../modules/auth/auth.routes";
 import { userRoutes } from "../modules/user/user.routes";
-import { cartsRouter } from "../modules/cart/cart.router";
+import { cartsRouter } from "../modules/cart/cart.routes";
 
 const router = Router() ;
 
