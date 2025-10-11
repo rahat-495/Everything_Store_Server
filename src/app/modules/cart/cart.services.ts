@@ -7,7 +7,7 @@ import { cartsModel } from "./cart.model";
 import http from "http-status-codes";
 
 const getMyAllCartsFromDb = async (user : JwtPayload) => {
-    const result = await cartsModel.find({userId : user?._doc?._id}) ;
+    const result = await cartsModel.find({userId : user?._doc?._id}).populate("productId") ;
     return result ;
 }
 

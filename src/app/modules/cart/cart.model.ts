@@ -6,12 +6,12 @@ const cartSchema = new Schema<TCart>({
     productId : {
         type : Schema.Types.ObjectId ,
         required : true ,
-        ref : 'products'
+        ref : 'product'
     },
     userId : {
         type : Schema.Types.ObjectId ,
         required : true ,
-        ref : 'users'
+        ref : 'user'
     },
     amount : {
         type : Number ,
