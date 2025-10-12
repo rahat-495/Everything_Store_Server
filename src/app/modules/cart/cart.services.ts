@@ -11,6 +11,14 @@ const getMyAllCartsFromDb = async (user : JwtPayload) => {
     return result ;
 }
 
+const getSingleCartFromDb = async (id : string) => {
+    const result = await cartsModel.findById(id).populate("productId") ;
+    if(!result){
+        throw new AppError(http.NOT_FOUND , "Cart not found !") ;
+    }
+    return result ;
+}
+
 const createCartIntoDb = async (payload : TCart) => {
     const product = await productsModel.findById(payload?.productId) ;
     if(Number(product?.quantity) >= Number(payload?.amount)){
@@ -51,8 +59,9 @@ const deleteCartIntoDb = async (id : string) => {
 }
 
 export const cartServices = {
-    getMyAllCartsFromDb ,
     createCartIntoDb ,
     updateCartIntoDb ,
     deleteCartIntoDb ,
+    getSingleCartFromDb ,
+    getMyAllCartsFromDb ,
 }

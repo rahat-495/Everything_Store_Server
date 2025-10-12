@@ -8,6 +8,7 @@ import { cartValidations } from "./cart.validations";
 const router = Router() ;
 
 router.get('/' , auth("user") , cartControllers.getMyAllCarts) ;
+router.get('/:id' , auth("user") , cartControllers.getSingleCart) ;
 router.delete('/:id' , auth("user") , cartControllers.deleteAddToCart) ;
 router.post('/add-to-cart' , auth("user") , validateRequest(cartValidations.createSartValidationSchema) , cartControllers.addToCart) ;
 router.patch('/update/add-to-cart/:id' , auth("user") , validateRequest(cartValidations.updateSartValidationSchema) , cartControllers.updateAddToCart) ;

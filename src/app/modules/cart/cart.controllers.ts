@@ -11,6 +11,13 @@ const getMyAllCarts = catchAsync(async (req : Request , res : Response , next : 
     }
 })
 
+const getSingleCart = catchAsync(async (req : Request , res : Response , next : NextFunction) => {
+    const result = await cartServices.getSingleCartFromDb(req.params?.id) ;
+    if(result){
+        sendResponse<object>(res , {data : result , statusCode : 201 , success : true , message : "Successfully retrived that cart !"}) ;
+    }
+})
+
 const addToCart = catchAsync(async (req : Request , res : Response , next : NextFunction) => {
     const result = await cartServices.createCartIntoDb(req.body) ;
     if(result){
@@ -34,6 +41,7 @@ const deleteAddToCart = catchAsync(async (req : Request , res : Response , next 
 
 export const cartControllers = {
     addToCart ,
+    getSingleCart ,
     getMyAllCarts ,
     updateAddToCart ,
     deleteAddToCart ,
