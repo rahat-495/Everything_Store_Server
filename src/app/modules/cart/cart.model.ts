@@ -24,6 +24,8 @@ const cartSchema = new Schema<TCart>({
         type : String ,
         required : true ,
     },
+},{
+    timestamps : true ,
 })
 
 export const cartsModel = model<TCart>('cart' , cartSchema) ;
