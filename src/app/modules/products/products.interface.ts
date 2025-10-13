@@ -10,4 +10,5 @@ export interface TProduct {
   inStock : boolean;
   quantity : number;
   category : string;
+  deliveryFee : number;
 }

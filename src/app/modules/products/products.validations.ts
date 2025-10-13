@@ -32,6 +32,10 @@ const createProductValidationSchema = z.object({
         quantity: z.number({
             required_error: "Quantity is required",
         }),
+        
+        deliveryFee: z.number({
+            required_error: "Delivery Fee is required",
+        }).optional(),
     })
 });
 
@@ -65,6 +69,10 @@ const updateProductValidationSchema = z.object({
 
         quantity: z.number({
             required_error: "Quantity is required",
+        }).optional(),
+
+        deliveryFee: z.number({
+            required_error: "Delivery Fee is required",
         }).optional(),
     })
 });

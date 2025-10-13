@@ -41,6 +41,12 @@ const productSchema = new Schema<TProduct>({
         type : Number ,
         required : true ,
     },
+    deliveryFee : {
+        type : Number ,
+        required : true ,
+    },
+},{
+    timestamps : true ,
 })
 
 export const productsModel = model<TProduct>("product" , productSchema) ;
