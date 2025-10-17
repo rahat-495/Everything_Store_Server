@@ -18,4 +18,5 @@ export interface TProduct {
   category : string;
   deliveryFee : number;
   paymentMethod : TPaymentMethod ;
+  // here promotion setup -------------------------
 }
