@@ -8,9 +8,13 @@ const orderSchema = new Schema<TOrder>({
       required: true,
       default: false,
     },
+    isCancel: {
+      type: Boolean,
+      default: false,
+    },
     transactionId: {
       type: String,
-      required: true,
+      default : "" ,
     },
     product: {
       type: Schema.Types.ObjectId,
@@ -54,6 +58,9 @@ const orderSchema = new Schema<TOrder>({
       required: true,
       min: 1,
     },
+    totalPrice: {
+      type: Number,
+    },
     deliveryDate: {
       type: String,
       required: true,
@@ -73,5 +80,17 @@ const orderSchema = new Schema<TOrder>({
     timestamps: true,
 });
 
-export const OrderModel = model<TOrder>("Order", orderSchema);
+orderSchema.pre("save", function (next) {
+  if (!this.transactionId) {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const milliseconds = date.getTime();
+    this.transactionId = `TXN-${year}${month}${day}-${milliseconds}`;
+  }
+  next();
+});
+
+export const ordersModel = model<TOrder>("Order", orderSchema);
 

@@ -3,7 +3,8 @@ import { Router } from "express";
 import { productRoutes } from "../modules/products/products.routes";
 import { authRoutes } from "../modules/auth/auth.routes";
 import { userRoutes } from "../modules/user/user.routes";
-import { cartsRouter } from "../modules/cart/cart.routes";
+import { cartRoutes } from "../modules/cart/cart.routes";
+import { orderRoutes } from "../modules/order/order.routes";
 
 const router = Router() ;
 
@@ -22,7 +23,11 @@ const moduleRoutes = [
     },
     {
         path : "/carts" ,
-        route : cartsRouter ,
+        route : cartRoutes ,
+    },
+    {
+        path : "/orders" ,
+        route : orderRoutes ,
     },
 ]
 

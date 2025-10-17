@@ -13,4 +13,4 @@ router.delete('/:id' , auth("user") , cartControllers.deleteAddToCart) ;
 router.post('/add-to-cart' , auth("user") , validateRequest(cartValidations.createSartValidationSchema) , cartControllers.addToCart) ;
 router.patch('/update/add-to-cart/:id' , auth("user") , validateRequest(cartValidations.updateSartValidationSchema) , cartControllers.updateAddToCart) ;
 
-export const cartsRouter = router ;
+export const cartRoutes = router ;
