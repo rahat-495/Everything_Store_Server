@@ -36,6 +36,12 @@ const createProductValidationSchema = z.object({
         deliveryFee: z.number({
             required_error: "Delivery Fee is required",
         }).optional(),
+        
+        paymentMethod : z.object({
+            nagat : z.boolean().default(false).optional() ,
+            bkash : z.boolean().default(false).optional() ,
+            cashOnDelivery : z.boolean().default(false).optional() ,
+        }),
     })
 });
 
@@ -64,15 +70,21 @@ const updateProductValidationSchema = z.object({
         title: z.string({
             required_error: "Title is required",
         }).optional(),
-
+        
         inStock: z.boolean().default(true).optional(),
-
+        
         quantity: z.number({
             required_error: "Quantity is required",
         }).optional(),
-
+        
         deliveryFee: z.number({
             required_error: "Delivery Fee is required",
+        }).optional(),
+
+        paymentMethod : z.object({
+            nagat : z.boolean().optional() ,
+            bkash : z.boolean().optional() ,
+            cashOnDelivery : z.boolean().optional() ,
         }).optional(),
     })
 });

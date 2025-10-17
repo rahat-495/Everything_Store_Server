@@ -1,4 +1,10 @@
 
+export interface TPaymentMethod {
+  bkash ?: boolean ;
+  nagat ?: boolean ;
+  CashOnDelivery ?: boolean ;
+}
+
 export interface TProduct {
   image: string;
   title: string;
@@ -11,4 +17,5 @@ export interface TProduct {
   quantity : number;
   category : string;
   deliveryFee : number;
+  paymentMethod : TPaymentMethod ;
 }

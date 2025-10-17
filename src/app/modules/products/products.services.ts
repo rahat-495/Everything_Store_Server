@@ -6,7 +6,7 @@ import httpStatus from "http-status-codes";
 
 const getAllProductsFromDb = async (query : any) => {
     const page = Number(query?.page) || 1 ;
-    const limit = Number(query?.limit) ;
+    const limit = Number(query?.limit) || 24 ;
     const skip = ( page - 1 ) * limit ;
 
     if(query?.minPrice === '0' && query?.maxPrice === '0'){

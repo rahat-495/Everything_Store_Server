@@ -45,6 +45,11 @@ const productSchema = new Schema<TProduct>({
         type : Number ,
         required : true ,
     },
+    paymentMethod: {
+        bkash: { type: Boolean, default: false },
+        nagat: { type: Boolean, default: false },
+        CashOnDelivery: { type: Boolean, default: false },
+    },
 },{
     timestamps : true ,
 })
