@@ -5,7 +5,7 @@ const createOrderValidationSchema = z.object({
     body: z.object({
         paidStatus: z.boolean().optional().default(false),
         isCancel: z.boolean().optional().default(false),
-        transactionId: z.string().optional(), // default empty string handled in model
+        transactionId: z.string().optional(), 
         product: z.string({ required_error: "Product ID is required" }),
         status: z.enum([
             "Pending",
@@ -19,7 +19,7 @@ const createOrderValidationSchema = z.object({
             "Refunded",
         ]).optional().default("Pending"),
         userId: z.string({ required_error: "User ID is required" }),
-        userEmail: z.string({ required_error: "User email is required" }).email(),
+        userEmail: z.string({ required_error: "User email is required" }).optional(),
         userPhone: z.string({ required_error: "User phone is required" }),
         shippingAddress: z.string({ required_error: "Shipping address is required" }),
         quantity: z.number({ required_error: "Quantity is required" }).min(1, "Quantity must be at least 1"),
@@ -37,7 +37,7 @@ const updateOrderValidationSchema = z.object({
     body: z.object({
         paidStatus: z.boolean().optional().default(false),
         isCancel: z.boolean().optional().default(false),
-        transactionId: z.string().optional(), // default empty string handled in model
+        transactionId: z.string().optional(), 
         product: z.string({ required_error: "Product ID is required" }).optional(),
         status: z.enum([
             "Pending",
@@ -51,7 +51,7 @@ const updateOrderValidationSchema = z.object({
             "Refunded",
         ]).optional().default("Pending"),
         userId: z.string({ required_error: "User ID is required" }).optional(),
-        userEmail: z.string({ required_error: "User email is required" }).email().optional(),
+        userEmail: z.string({ required_error: "User email is required" }).optional(),
         userPhone: z.string({ required_error: "User phone is required" }).optional(),
         shippingAddress: z.string({ required_error: "Shipping address is required" }).optional(),
         quantity: z.number({ required_error: "Quantity is required" }).min(1, "Quantity must be at least 1").optional(),

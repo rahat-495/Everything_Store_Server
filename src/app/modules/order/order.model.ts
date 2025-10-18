@@ -43,7 +43,6 @@ const orderSchema = new Schema<TOrder>({
     },
     userEmail: {
       type: String,
-      required: true,
     },
     userPhone: {
       type: String,

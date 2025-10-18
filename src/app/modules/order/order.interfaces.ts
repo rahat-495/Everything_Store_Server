@@ -9,7 +9,7 @@ export interface TOrder {
     product : Types.ObjectId ;
     status : TStatus ;
     userId : Types.ObjectId ;
-    userEmail : string ;
+    userEmail ?: string ;
     userPhone : string ;
     isCancel : boolean ;
     shippingAddress : string ;
