@@ -22,18 +22,18 @@ const createOrderIntoDb = async (payload : TOrder) => {
 }
 
 const getAllOrdersFromDb = async () => {
-    const result = await ordersModel.find() ;
+    const result = await ordersModel.find().populate("product").populate("userId") ;
     return result ;
 }
 
 const getMyAllOrdersFromDb = async (user : JwtPayload) => {
-    const result = await ordersModel.find({userId : user?._doc?._id}) ;
+    const result = await ordersModel.find({userId : user?._doc?._id}).populate("product").populate("userId") ;
     console.log(user?._doc?._id);
     return result ;
 }
 
 const getMySingleOrderFromDb = async (id : string) => {
-    const result = await ordersModel.findById(id) ;
+    const result = await ordersModel.findById(id).populate("product").populate("userId") ;
     if(!result){
         throw new AppError(http.NOT_FOUND , "Order not found !") ;
     }
@@ -72,6 +72,9 @@ const cancelOrderIntoDb = async (id : string) => {
     }
     
     if(isOrderExist?.status === "Pending" || isOrderExist?.status === "Processing"){
+        if(isOrderExist?.isCancel){
+            throw new AppError(http.CONFLICT , `Order is already cancled!`) ;
+        }
         const result = await ordersModel.findByIdAndUpdate(id , {isCancel : true} , {new : true}) ;
         return result ;
     }

@@ -18,7 +18,7 @@ const orderSchema = new Schema<TOrder>({
     },
     product: {
       type: Schema.Types.ObjectId,
-      ref: "Product",
+      ref: "product",
       required: true,
     },
     status: {
@@ -38,7 +38,7 @@ const orderSchema = new Schema<TOrder>({
     },
     userId: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "user",
       required: true,
     },
     userEmail: {
