@@ -25,8 +25,8 @@ const getMyAllOrders = catchAsync(async (req : Request , res : Response , next :
     }
 })
 
-const getMySingleOrder = catchAsync(async (req : Request , res : Response , next : NextFunction) => {
-    const result = await orderServices.getMySingleOrderFromDb(req.params?.id) ;
+const getSingleOrder = catchAsync(async (req : Request , res : Response , next : NextFunction) => {
+    const result = await orderServices.getSingleOrderFromDb(req.params?.id) ;
     if(result){
         sendResponse<object>(res , {data : result , statusCode : 201 , success : true , message : "Orders are retrived successfull !"}) ;
     }
@@ -51,6 +51,6 @@ export const orderControllers = {
     createOrder ,
     getAllOrders ,
     getMyAllOrders ,
-    getMySingleOrder ,
+    getSingleOrder ,
     updateOrderStatus ,
 }

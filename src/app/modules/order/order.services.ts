@@ -5,11 +5,17 @@ import { TOrder, TStatus } from "./order.interfaces" ;
 import http from "http-status-codes" ;
 import { ordersModel } from "./order.model";
 import { JwtPayload } from "jsonwebtoken";
+import { cartsModel } from "../cart/cart.model";
 
 const createOrderIntoDb = async (payload : TOrder) => {
     const isProductExist = await productsModel.findById(payload?.product) ;
     if(!isProductExist){
         throw new AppError(http.NOT_FOUND , "Product not found !") ;
+    }
+
+    const isCartExist = await cartsModel.findOne({userId : payload?.userId , productId : payload?.product}) ;
+    if(isCartExist){
+        await cartsModel.findByIdAndDelete(isCartExist?._id) ;
     }
     
     if(Number(isProductExist?.quantity) >= Number(payload?.quantity)){
@@ -28,11 +34,10 @@ const getAllOrdersFromDb = async () => {
 
 const getMyAllOrdersFromDb = async (user : JwtPayload) => {
     const result = await ordersModel.find({userId : user?._doc?._id}).populate("product").populate("userId") ;
-    console.log(user?._doc?._id);
     return result ;
 }
 
-const getMySingleOrderFromDb = async (id : string) => {
+const getSingleOrderFromDb = async (id : string) => {
     const result = await ordersModel.findById(id).populate("product").populate("userId") ;
     if(!result){
         throw new AppError(http.NOT_FOUND , "Order not found !") ;
@@ -50,7 +55,12 @@ const updateOrderStatusIntoDb = async (id : string , payload : {cancelReason ?: 
         throw new AppError(http.CONFLICT , "User already cancel the order !") ;
     }
 
-    const result = await ordersModel.findByIdAndUpdate(id , {status : payload?.status , cancelReason : payload?.cancelReason} , {new : true}) ;
+    const updatedStatus = {status : payload?.status , cancelReason : payload?.cancelReason , paidStatus : false} ;
+    if(payload?.status === "Delivered"){
+        updatedStatus.paidStatus = true ;
+    }
+
+    const result = await ordersModel.findByIdAndUpdate(id , updatedStatus , {new : true}) ;
     return result ;
 }
 
@@ -85,6 +95,6 @@ export const orderServices = {
     createOrderIntoDb ,
     getAllOrdersFromDb ,
     getMyAllOrdersFromDb ,
-    getMySingleOrderFromDb ,
+    getSingleOrderFromDb ,
     updateOrderStatusIntoDb ,
 }
