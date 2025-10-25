@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.orderRoutes = void 0;
+const express_1 = require("express");
+const order_controllers_1 = require("./order.controllers");
+const validateRequest_1 = __importDefault(require("../../middlewares/validateRequest"));
+const order_validations_1 = require("./order.validations");
+const auth_1 = __importDefault(require("../../middlewares/auth"));
+const router = (0, express_1.Router)();
+router.get('/', (0, auth_1.default)("admin"), order_controllers_1.orderControllers.getAllOrders);
+router.get('/get-my-orders', (0, auth_1.default)("user"), order_controllers_1.orderControllers.getMyAllOrders);
+router.get('/get-my-history', (0, auth_1.default)("user"), order_controllers_1.orderControllers.getMyHistory);
+router.patch('/cancel-order/:id', (0, auth_1.default)("user"), order_controllers_1.orderControllers.cancelOrder);
+router.get('/:id', (0, auth_1.default)("user", "admin"), order_controllers_1.orderControllers.getSingleOrder);
+router.post('/create-order', (0, auth_1.default)("user"), (0, validateRequest_1.default)(order_validations_1.orderValidations.createOrderValidationSchema), order_controllers_1.orderControllers.createOrder);
+router.patch('/update-order-status/:id', (0, validateRequest_1.default)(order_validations_1.orderValidations.updateOrderValidationSchema), (0, auth_1.default)("admin"), order_controllers_1.orderControllers.updateOrderStatus);
+exports.orderRoutes = router;
