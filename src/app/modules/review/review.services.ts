@@ -7,7 +7,7 @@ import http from "http-status-codes" ;
 import { reviewsModel } from "./review.model";
 import { JwtPayload } from "jsonwebtoken";
 
-const createReviewIntoDb = async (payload : TReview) => {
+const createReviewIntoDb = async (payload : TReview , user : JwtPayload) => {
     const isProductExist = await productsModel.findById(payload?.productId) ;
     if(!isProductExist){
         throw new AppError(http.NOT_FOUND , "Product not found !") ;
@@ -18,7 +18,7 @@ const createReviewIntoDb = async (payload : TReview) => {
         throw new AppError(http.NOT_FOUND , "Order not found !") ;
     }
     
-    const result = await reviewsModel.create(payload) ;
+    const result = await reviewsModel.create({...payload , userId : user?._doc?._id}) ;
     return result ;
 }
 
@@ -35,19 +35,36 @@ const getMySingleReviewFromDb = async (id : string) => {
     return result ;
 }
 
+const getAllReviewsFromDb = async () => {
+    const result = await reviewsModel.find() ;
+    return result ;
+}
+
+const getMyOrderReviewFromDb = async (id : string) => {
+    const isOrderExist = await ordersModel.findById(id) ;
+    if(!isOrderExist){
+        throw new AppError(http.NOT_FOUND , "Order not found !") ;
+    }
+
+    const result = await reviewsModel.findOne({ orderId : isOrderExist?._id , productId : isOrderExist?.product , userId : isOrderExist?.userId }) ;
+    return result ;
+}
+
 const updateMyReviewIntoDb = async (id : string , payload : Partial<TReview>) => {
     const isReviewExist = await reviewsModel.findById(id) ;
     if(!isReviewExist){
         throw new AppError(http.NOT_FOUND , "Review not found !") ;
     }
 
-    const result = await reviewsModel.findByIdAndUpdate(id , { rating : payload?.rating , review : payload?.review , images : payload?.images }) ;
+    const result = await reviewsModel.findByIdAndUpdate(id , { rating : payload?.rating , review : payload?.review , images : payload?.images } , {new : true}) ;
     return result ;
 }
 
 export const reviewServices = {
     createReviewIntoDb ,
+    getAllReviewsFromDb ,
     updateMyReviewIntoDb ,
     getMyAllReviewsFromDb ,
+    getMyOrderReviewFromDb ,
     getMySingleReviewFromDb ,
 }
