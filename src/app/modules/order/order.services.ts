@@ -91,7 +91,7 @@ const cancelOrderIntoDb = async (id : string) => {
 }
 
 const getMyHistoryFromDb = async (user : JwtPayload) => {
-    const result = await ordersModel.find({userId : user?._doc?._id , $or: [{ status: "Delivered" }, { isCancel: true }] }) ;
+    const result = await ordersModel.find({userId : user?._doc?._id , $or: [{ status: "Delivered" }, { isCancel: true }] }).populate("product").populate("userId") ;
     return result ; 
 }
 
