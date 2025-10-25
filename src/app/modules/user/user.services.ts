@@ -13,7 +13,13 @@ const updateProfileIntoDb = async ( id : string ,  payload : Partial<TUser> ) =>
     return result ;
 }
 
+const getAllUsersFromDb = async () => {
+    const result = await userModel.find() ;
+    return result ;
+}
+
 export const userServices = {
     getMyDataFromDb ,
+    getAllUsersFromDb ,
     updateProfileIntoDb ,
 }
