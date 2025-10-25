@@ -33,7 +33,7 @@ const getAllOrdersFromDb = async () => {
 }
 
 const getMyAllOrdersFromDb = async (user : JwtPayload) => {
-    const result = await ordersModel.find({userId : user?._doc?._id}).populate("product").populate("userId") ;
+    const result = await ordersModel.find({userId : user?._doc?._id , status : { $ne : "Delivered" } , isCancel : false } ).populate("product").populate("userId") ;
     return result ;
 }
 
@@ -90,10 +90,16 @@ const cancelOrderIntoDb = async (id : string) => {
     }
 }
 
+const getMyHistoryFromDb = async (user : JwtPayload) => {
+    const result = await ordersModel.find({userId : user?._doc?._id , $or: [{ status: "Delivered" }, { isCancel: true }] }) ;
+    return result ; 
+}
+
 export const orderServices = {
     cancelOrderIntoDb ,
     createOrderIntoDb ,
     getAllOrdersFromDb ,
+    getMyHistoryFromDb ,
     getMyAllOrdersFromDb ,
     getSingleOrderFromDb ,
     updateOrderStatusIntoDb ,

@@ -9,6 +9,7 @@ const router = Router() ;
 
 router.get('/' , auth("admin") , orderControllers.getAllOrders) ;
 router.get('/get-my-orders' , auth("user") , orderControllers.getMyAllOrders) ;
+router.get('/get-my-history' , auth("user") , orderControllers.getMyHistory) ;
 router.patch('/cancel-order/:id' , auth("user") , orderControllers.cancelOrder) ;
 router.get('/:id' , auth("user" , "admin") , orderControllers.getSingleOrder) ;
 router.post('/create-order' , auth("user") , validateRequest(orderValidations.createOrderValidationSchema) , orderControllers.createOrder) ;

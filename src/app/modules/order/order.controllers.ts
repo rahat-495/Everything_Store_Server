@@ -46,9 +46,17 @@ const cancelOrder = catchAsync(async (req : Request , res : Response , next : Ne
     }
 })
 
+const getMyHistory = catchAsync(async (req : Request , res : Response , next : NextFunction) => {
+    const result = await orderServices.getMyHistoryFromDb(req?.user) ;
+    if(result){
+        sendResponse<object>(res , {data : result , statusCode : 201 , success : true , message : "History are retrived successfull !"}) ;
+    }
+})
+
 export const orderControllers = {
     cancelOrder ,
     createOrder ,
+    getMyHistory ,
     getAllOrders ,
     getMyAllOrders ,
     getSingleOrder ,
