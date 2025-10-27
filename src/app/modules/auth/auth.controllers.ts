@@ -7,8 +7,8 @@ import config from "../../config";
 
 const registerUser = catchAsync(async (req : Request , res : Response , next : NextFunction) => {
     const result = await authServices.createUserIntoDb(req.body) ;
-    res.cookie("refreshToken" , result.refreshToken , {httpOnly : true , secure : config.nodeEnv === 'production' , sameSite : "strict" , maxAge : 1000 * 60 * 60 * 24 * 365}) ;
-    res.cookie("accessToken" , result.accessToken , {httpOnly : true , secure : config.nodeEnv === 'production' , sameSite : "strict" , maxAge : 1000 * 60 * 60 * 24 * 10}) ;
+    res.cookie("refreshToken" , result.refreshToken , {httpOnly : true , secure : false , sameSite : "none" , maxAge : 1000 * 60 * 60 * 24 * 365}) ;
+    res.cookie("accessToken" , result.accessToken , {httpOnly : true , secure : false , sameSite : "none" , maxAge : 1000 * 60 * 60 * 24 * 10}) ;
     if(result){
         sendResponse<object>(res , {data : {user : result.result , accessToken : result.accessToken} , statusCode : 201 , success : true , message : "User register successfully !"}) ;
     }
@@ -16,8 +16,8 @@ const registerUser = catchAsync(async (req : Request , res : Response , next : N
 
 const loginUser = catchAsync(async (req : Request , res : Response , next : NextFunction) => {
     const result = await authServices.login(req.body) ;
-    res.cookie("refreshToken" , result.refreshToken , {httpOnly : true , secure : config.nodeEnv === 'production' , sameSite : "strict" , maxAge : 1000 * 60 * 60 * 24 * 365}) ;
-    res.cookie("accessToken" , result.accessToken , {httpOnly : true , secure : config.nodeEnv === 'production' , sameSite : "strict" , maxAge : 1000 * 60 * 60 * 24 * 10}) ;
+    res.cookie("refreshToken" , result.refreshToken , {httpOnly : true , secure : false , sameSite : "none" , maxAge : 1000 * 60 * 60 * 24 * 365}) ;
+    res.cookie("accessToken" , result.accessToken , {httpOnly : true , secure : false , sameSite : "none" , maxAge : 1000 * 60 * 60 * 24 * 10}) ;
     if(result){
         sendResponse<object>(res , {data : { user : result.user , accessToken : result.accessToken } , statusCode : 201 , success : true , message : "User login successfully !"}) ;
     }
